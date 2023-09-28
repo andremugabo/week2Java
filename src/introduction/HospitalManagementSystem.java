@@ -38,7 +38,7 @@ public class HospitalManagementSystem {
                     try{
                         Connection con = DriverManager.getConnection(dbUrl ,username ,password);
                         Statement st = con.createStatement();
-                        String sql = "insert into patient(patient_id,patient_names) values(1,'Kevin Iradukunda')";
+                        String sql = "insert into patient(patient_id,patient_names) values(null,'Kevin Iradukunda')";
                         int rowAffected = st.executeUpdate(sql);
                         if(rowAffected >= 1){
                             System.out.println("Patient Created");
@@ -60,10 +60,189 @@ public class HospitalManagementSystem {
                     }
                     break;
                 case 2:
-                    System.out.println("Second Option");
+                    try{
+                        Connection con = DriverManager.getConnection(dbUrl ,username ,password);
+                        Statement st = con.createStatement();
+                        System.out.println(" Record a patient ");
+                        String name = sc.next();
+                        int rowAffected = st.executeUpdate(InsertFunction(name));
+                        if(rowAffected >= 1){
+                            System.out.println("The patient "+name+" recorded successfully");
+                        }else{
+                            System.out.println("Patient not created !!");
+                        }
+                        con.close();
+                        System.out.println("Enter Yes or NO to continue or to exit:");
+                        String answer = sc.next();
+                        if(answer.equalsIgnoreCase("yes")){
+                            condition = true;
+                        }else{
+                            System.out.println("Thank you for using the system");
+                            condition = false;
+                        }
+                        
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
                     break;
                 case 3:
-                    System.out.println("Third Option");
+                    try{
+                        Connection con = DriverManager.getConnection(dbUrl, username, password);
+                        Statement st = con.createStatement();
+                        String query = "UPDATE patient SET patient_names = 'Safari Samuel'";
+                        int rowAffected = st.executeUpdate(query);
+                        if(rowAffected >= 1){
+                            System.out.println("All Patients names updated succefully");
+                        }else{
+                            System.out.println("Sorry update failed!!");
+                        }
+                        con.close();
+                        System.out.println("Enter Yes or No to Continue or to Exit !!");
+                        String answer = sc.next();
+                        if(answer.equalsIgnoreCase("yes")){
+                            condition = true;
+                        }else{
+                            System.out.println("Thank for you using the system");
+                            condition = false;
+                        }
+                        
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
+                    break;
+                case 4:
+                    try{
+                    Connection con = DriverManager.getConnection(dbUrl ,username ,password);
+                    Statement st = con.createStatement();
+                    System.out.println("Update all patient names: ");
+                    String name = sc.next();
+                    int rowAffected = st.executeUpdate(updateFunction(name));
+                    if(rowAffected >= 1){
+                        System.out.println("All patient names are updated to only name which is :"+name);
+                    }else{
+                        System.out.println("Update failed sorry");
+                    }
+                    con.close();
+                    System.out.println("Enter Yes or No to Continue or to Exit");
+                    String answer = sc.next();
+                    if(answer.equalsIgnoreCase("yes")){
+                        condition = true;
+                    }else{
+                        System.out.println("Thank you for using the system");
+                        condition = false;
+                    }
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
+                    break;
+                case 5:
+                    try{
+                        Connection con =DriverManager.getConnection(dbUrl, username, password);
+                        Statement st = con.createStatement();
+                        String query = "DELETE FROM patient WHERE patient_names = 'Ingabire'";
+                        int rowAffected = st.executeUpdate(query);
+                        if(rowAffected >= 1){
+                        System.out.println("Patient deleted succefully !!!");
+                    }else{
+                        System.out.println("Delete failed sorry the proposed patient is not recorded");
+                    }
+                    con.close();
+                    System.out.println("Enter Yes or No to Continue or to Exit :");
+                    String answer = sc.next();
+                    if(answer.equalsIgnoreCase("yes")){
+                        condition = true;
+                    }else{
+                        System.out.println("Thank you for using the system!!");
+                        condition = false;
+                    }
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
+                    break;
+                case 6:
+                    try{
+                        Connection con = DriverManager.getConnection(dbUrl ,username ,password);
+                        Statement st = con.createStatement();
+                        String name = sc.next();
+                        int rowAffected = st.executeUpdate(deleteFunction(name));
+                        
+                        if(rowAffected >=1){
+                            System.out.println("The patient named "+name+" deleted successfully!!");
+                        }else{
+                            System.out.println("The propesed patient is not recorded !!");
+                        }
+                        con.close();
+                        System.out.println("Enter Yes or No to Continue or to Exit :");
+                        String answer = sc.next();
+                        if(answer.equalsIgnoreCase("yes")){
+                            condition = true;                        
+                        }else{
+                            System.out.println("Thank you for Using the system!!");
+                            condition = false;
+                        }                       
+                        
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
+                    break;
+                case 7:
+                    try{
+                        ResultSet rst= null;
+                        Connection con = DriverManager.getConnection(dbUrl, username, password);
+                        Statement st = con.createStatement();
+                        String query  = "SELECT * FROM patient";
+                        rst = st.executeQuery(query);
+                        System.out.println("==================================================");
+                        System.out.println("        ========RECORDED STUDENTS=========");
+                        System.out.println("==================================================");
+                        while(rst.next()){
+                            System.out.println("Patient ID :"+rst.getInt("patient_id")+" Name :"+rst.getString("patient_names"));
+                        }
+                        System.out.println("==================================================");
+                        con.close();
+                        System.out.println("Enter Yes or No to Continue or to Exit :");
+                        String answer = sc.next();
+                        if(answer.equalsIgnoreCase("yes")){
+                            condition = true;                        
+                        }else{
+                            System.out.println("Thank you for Using the system!!");
+                            condition = false;
+                        }                       
+                        
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
+                    break;
+                    
+                case 8:
+                    try{
+                        ResultSet rst = null;
+                        Connection con = DriverManager.getConnection(dbUrl, username, password);
+                        Statement st = con.createStatement();
+                        System.out.println("Search patient by ID :");
+                        int id = sc.nextInt();
+                        rst = st.executeQuery(searchByIdFunction(id));
+                        System.out.println("==================================================");
+                        System.out.println("        ========SEARCHED STUDENT=========");
+                        System.out.println("==================================================");
+                        while(rst.next()){
+                            System.out.println("The search students is :"+rst.getString("patient_names"));
+                        }
+                        System.out.println("==================================================");
+
+                        con.close();
+                        System.out.println("Enter Yes or No to Continue or to Exit :");
+                        String answer = sc.next();
+                        if(answer.equalsIgnoreCase("yes")){
+                            condition = true;                        
+                        }else{
+                            System.out.println("Thank you for Using the system!!");
+                            condition = false;
+                        }       
+                    
+                    }catch(Exception ex){
+                        ex.printStackTrace();
+                    }
                     break;
                 case 0:
                     System.out.println("Wrong Choice!!");
@@ -80,5 +259,24 @@ public class HospitalManagementSystem {
             
             
         }
+    }
+    public static String InsertFunction(String name){
+        String query = "INSERT INTO patient(patient_id,patient_names) VALUES(null,'"+name+"')";
+        return query;
+    }
+    
+    public static String updateFunction(String name){
+        String query = "UPDATE patient SET patient_names = '"+name+"'";
+        return query;
+    }
+    
+    public static String deleteFunction(String name){
+        String query = "DELETE FROM patient WHERE patient_names = '"+name+"'";
+        return query;
+    }
+    
+    public static String searchByIdFunction(int id){
+        String query = "SELECT * FROM patient WHERE patient_id = '"+id+"'";
+        return query;
     }
 }
